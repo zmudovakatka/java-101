@@ -7,4 +7,4 @@ moj prvy kurz o jave
 
 a dalsia zmena
 
-a co teraz
+zmena v utorok
