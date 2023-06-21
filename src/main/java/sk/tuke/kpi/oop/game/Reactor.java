@@ -100,6 +100,37 @@ public class Reactor extends AbstractActor {
 
         }
     }
+    public void repairWith(Hammer hammer){
+//        if (hammer != null && this.damage>0 && this.damage<100){
+//
+//            if (this.damage<50){
+//                this.damage=0;
+//            } else {
+//                this.damage-=50;
+//            }
+//            hammer.getUsages();
+//
+//
+//        }
+        if (hammer==null){
+            return;
+        }
+        if (this.damage==0){
+            return;
+        }
+        if (this.damage==100){
+            return;
+        }
+        hammer.use();
+        this.damage=this.damage-50;
+        this.temperature = 0;
+
+        if(this.damage<0){
+            this.damage=0;
+        }
+
+
+    }
 }
 
 
