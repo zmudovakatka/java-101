@@ -43,21 +43,25 @@ public class Reactor extends AbstractActor {
     }
 
     public void increaseTemperature(int increment) {
-        this.temperature += increment;
-        if (this.damage==100){
+        if (increment < 0) {
             return;
+        }
+        this.temperature += increment;
+        if (this.damage == 100) {
+            return;
+
         }
 
         updateAnimation();
 
-        if(this.temperature>2000){
-            if (this.temperature>=6000){
-                this.damage=100;
+        if (this.temperature > 2000) {
+            if (this.temperature >= 6000) {
+                this.damage = 100;
 
             } else {
-                int damage = this.temperature/40 - 50;
-                if (this.damage<damage){
-                    this.damage=damage;
+                int damage = this.temperature / 40 - 50;
+                if (this.damage < damage) {
+                    this.damage = damage;
 
                 }
 
@@ -67,30 +71,35 @@ public class Reactor extends AbstractActor {
         }
 
 
-
-
     }
+
     public void decreaseTemperature(int decrement) {
-        this.temperature -= decrement;
-        if (this.damage==100){
+        if (decrement < 0) {
             return;
         }
-        updateAnimation();
+
+        this.temperature -= decrement;
+        if (this.damage == 100) {
+            return;
         }
-     public void updateAnimation(){
-         if (this.temperature >= 6000) {
-//
-             setAnimation(this.brokenAnimation);
-         } else if (this.temperature >= 4000) {
-//
-             setAnimation(this.hotAnimation);
 
-         } else  {
-//
-             setAnimation(this.normalAnimation);
-
-         }
-     }
+        updateAnimation();
     }
+
+    public void updateAnimation() {
+        if (this.temperature >= 6000) {
+//
+            setAnimation(this.brokenAnimation);
+        } else if (this.temperature >= 4000) {
+//
+            setAnimation(this.hotAnimation);
+
+        } else {
+//
+            setAnimation(this.normalAnimation);
+
+        }
+    }
+}
 
 
