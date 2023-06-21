@@ -17,4 +17,11 @@ public class Hammer extends AbstractActor {
     public int getUsages() {
         return this.usages;
     }
+
+    public void use(){
+        this.usages--;
+        if (this.usages == 0){
+            getScene().removeActor(this);
+        }
+    }
 }
