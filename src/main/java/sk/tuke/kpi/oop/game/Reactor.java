@@ -48,30 +48,7 @@ public class Reactor extends AbstractActor {
             return;
         }
 
-        //update animation
-        if (this.temperature >= 6000) {
-//            Animation animation = new Animation("sprites/reactor_broken.png",
-//                80, 80, 0.1f,
-//                Animation.PlayMode.LOOP_PINGPONG);
-//            setAnimation(animation);
-            setAnimation(this.brokenAnimation);
-        } else if (this.temperature >= 4000) {
-//            Animation animation = new Animation("sprites/reactor_hot.png",
-//                80, 80, 0.1f,
-//                Animation.PlayMode.LOOP_PINGPONG);
-//            setAnimation(animation);
-            setAnimation(this.hotAnimation);
-
-        } else  {
-//            nastavenie normalnej animacie ale vieme vyuzit normalAnimation z konstruktora Reactor
-
-//            Animation animation = new Animation("sprites/reactor_on.png",
-//                80, 80, 0.1f,
-//                Animation.PlayMode.LOOP_PINGPONG);
-//            setAnimation(animation);
-            setAnimation(this.normalAnimation);
-
-        }
+        updateAnimation();
 
         if(this.temperature>2000){
             if (this.temperature>=6000){
@@ -93,5 +70,27 @@ public class Reactor extends AbstractActor {
 
 
     }
+    public void decreaseTemperature(int decrement) {
+        this.temperature -= decrement;
+        if (this.damage==100){
+            return;
+        }
+        updateAnimation();
+        }
+     public void updateAnimation(){
+         if (this.temperature >= 6000) {
+//
+             setAnimation(this.brokenAnimation);
+         } else if (this.temperature >= 4000) {
+//
+             setAnimation(this.hotAnimation);
 
-}
+         } else  {
+//
+             setAnimation(this.normalAnimation);
+
+         }
+     }
+    }
+
+
