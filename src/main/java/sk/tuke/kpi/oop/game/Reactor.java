@@ -44,6 +44,9 @@ public class Reactor extends AbstractActor {
 
     public void increaseTemperature(int increment) {
         this.temperature += increment;
+        if (this.damage==100){
+            return;
+        }
 
         //update animation
         if (this.temperature >= 6000) {
@@ -71,11 +74,22 @@ public class Reactor extends AbstractActor {
         }
 
         if(this.temperature>2000){
+            if (this.temperature>=6000){
+                this.damage=100;
+
+            } else {
+                int damage = this.temperature/40 - 50;
+                if (this.damage<damage){
+                    this.damage=damage;
+
+                }
+
+            }
 
 
         }
 
-        int damage = this.temperature/40 - 50;
+
 
 
     }
