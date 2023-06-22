@@ -10,11 +10,14 @@ public class Reactor extends AbstractActor {
     private Animation normalAnimation;
     private Animation hotAnimation;
     private Animation brokenAnimation;
+    private Animation offAnimation;
 
     public Reactor() {
         this.state = false;
         this.damage = 0;
         this.temperature = 0;
+        this.offAnimation = new Animation(
+            "sprites/reactor.png");
         this.normalAnimation = new Animation(
             "sprites/reactor_on.png",
             80,
@@ -31,7 +34,7 @@ public class Reactor extends AbstractActor {
             80,
             0.1F, Animation.PlayMode.LOOP_PINGPONG);
 
-        setAnimation(this.normalAnimation);
+        setAnimation(this.offAnimation);
     }
 
     public int getTemperature() {
@@ -41,9 +44,30 @@ public class Reactor extends AbstractActor {
     public int getDamage() {
         return this.damage;
     }
+    public void turnOn(){
+        this.state=true;
+        if (this.damage == 100){
+            return;
+        }
+
+        getAnimation().play();
+        updateAnimation();
+    }
+    public void turnOff(){
+        if(this.damage == 100){
+            return;
+        }
+        this.state = false;
+        getAnimation().pause();
+        updateAnimation();
+    }
+
+    public boolean isRunning(){
+        return this.state;
+    }
 
     public void increaseTemperature(int increment) {
-        if (increment < 0) {
+        if (increment < 0 || isRunning() == false){
             return;
         }
         this.temperature += increment;
@@ -57,6 +81,7 @@ public class Reactor extends AbstractActor {
         if (this.temperature > 2000) {
             if (this.temperature >= 6000) {
                 this.damage = 100;
+                this.state = false;
 
             } else {
                 int damage = this.temperature / 40 - 50;
@@ -74,7 +99,7 @@ public class Reactor extends AbstractActor {
     }
 
     public void decreaseTemperature(int decrement) {
-        if (decrement < 0) {
+        if (decrement < 0|| isRunning()==false) {
             return;
         }
 
@@ -99,6 +124,8 @@ public class Reactor extends AbstractActor {
             setAnimation(this.normalAnimation);
 
         }
+
+
     }
     public void repairWith(Hammer hammer){
 //        if (hammer != null && this.damage>0 && this.damage<100){
